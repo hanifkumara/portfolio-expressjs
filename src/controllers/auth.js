@@ -1,9 +1,11 @@
 const { response } = require('../helpers/response')
 const User = require("../models/User.js")
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+const BusinessAccount = require('../models/BusinessAccount');
+const Business = require('../models/Business');
 
-const register = async (req, res, next) => {
+const registerUser = async (req, res, next) => {
   try {
     const {email, password} = req.body
 
@@ -27,7 +29,7 @@ const register = async (req, res, next) => {
   }
 }
 
-const login = async (req, res, next) => {
+const loginUser = async (req, res, next) => {
   try {
     const {email, password} = req.body
     const user = await User.findOne({
@@ -67,6 +69,39 @@ const login = async (req, res, next) => {
   }
 }
 
+const registerBusinessAccount = async (req, res, next) => {
+  try {
+    const {email, password} = req.body
+
+    const existingBusinessAccount = await BusinessAccount.findOne({
+      where: {
+        email
+      }
+    })
+
+    if(existingBusinessAccount) return response(res, 401, null, {message: `Email ${email} already in use`})
+
+    const salt = bcrypt.genSaltSync(10);
+    const hash = bcrypt.hashSync(password, salt);
+
+    const resCreateBusinessAccount = await BusinessAccount.create({
+      email,
+      password: hash
+    })
+
+    const resCreateBusiness = await Business.create({
+      businessAccountId: resCreateBusinessAccount.id
+    })
+
+    resCreateBusinessAccount.businessId = resCreateBusiness.id
+    await resCreateBusinessAccount.save()
+
+    return response(res, 201, {result: {email}}, null)
+  } catch (error) {
+    return next(error)
+  }
+}
+
 const findAll = async (req, res, next) => {
   try {
     
@@ -83,7 +118,8 @@ const findAll = async (req, res, next) => {
 }
 
 module.exports = {
-  register,
-  login,
+  registerUser,
+  loginUser,
+  registerBusinessAccount,
   findAll
 }

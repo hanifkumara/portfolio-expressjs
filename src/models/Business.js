@@ -11,7 +11,7 @@ const Business = db.define('Business', {
   userId: {
     type: DataTypes.UUID,
   },
-  ownerId: {
+  businessAccountId: {
     type: DataTypes.UUID,
   },
   name: {

@@ -1,15 +1,12 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const db = require('../config/database')
 
-const Owner = db.define('Owner', {
+const BusinessAccount = db.define('BusinessAccount', {
   // Model attributes are defined here
   id: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
     primaryKey: true
-  },
-  userId: {
-    type: DataTypes.UUID,
   },
   businessId: {
     type: DataTypes.UUID,
@@ -20,14 +17,17 @@ const Owner = db.define('Owner', {
   password: {
     type: DataTypes.STRING
   },
-  verify: {
+  isVerified: {
     type: DataTypes.TINYINT
+  },
+  lastLogin: {
+    type: DataTypes.DATE
   }
 }, {
   paranoid: true,
   timestamps: true,
-  tableName: 'owners',
+  tableName: 'business_accounts',
   underscored: false
 });
 
-module.exports = Owner
+module.exports = BusinessAccount
