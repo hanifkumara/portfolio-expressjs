@@ -1,8 +1,9 @@
 const express = require('express')
 const Route = express.Router()
-const { Create } = require('../controllers/outlet')
+const { FindAll, Create } = require('../controllers/outlet')
 
 Route
+  .get('/', FindAll)
   .post('/', Create)
 
 const routeProps = {

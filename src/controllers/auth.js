@@ -102,6 +102,46 @@ const registerBusinessAccount = async (req, res, next) => {
   }
 }
 
+const loginBusinessAccount = async (req, res, next) => {
+  try {
+    const {email, password} = req.body
+    const businessAccount = await BusinessAccount.findOne({
+      where: {
+        email
+      }
+    })
+
+    if(!businessAccount) return response(res, 401, null, { message: 'Email not Found!!' })
+
+    bcrypt.compare(password, businessAccount.password, function (err, resCheck) {
+      if (!resCheck) return response(res, 401, null, { message: 'Password Wrong!!' })
+
+      const payload = {
+        userId: businessAccount.id,
+        email: businessAccount.email
+      }
+
+      const token = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: '5h' });
+      // jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: '5h' }, function (err, token) {
+      //   if(err) {
+      //     console.log("err jwt sign =====>", err)
+      //   } else {
+      //     businessAccount.token = token
+      //   }
+      // })
+
+      if(!token) return response(res, 401, null, { message: "Something wen't wrong at JWT Signature" })
+
+      delete businessAccount.dataValues.password
+      businessAccount.dataValues.token = token
+
+      return response(res, 200, businessAccount, null)
+    })
+  } catch (error) {
+    return next(error)
+  }
+}
+
 const findAll = async (req, res, next) => {
   try {
     
@@ -121,5 +161,6 @@ module.exports = {
   registerUser,
   loginUser,
   registerBusinessAccount,
+  loginBusinessAccount,
   findAll
 }

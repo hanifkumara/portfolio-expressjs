@@ -26,6 +26,24 @@ const Business = db.define('Business', {
   phoneNumber: {
     type: DataTypes.STRING
   },
+  registrationDate: {
+    type: DataTypes.DATE
+  },
+  province: {
+    type: DataTypes.STRING
+  },
+  city: {
+    type: DataTypes.STRING
+  },
+  location: {
+    type: DataTypes.STRING
+  },
+  nameOnKtp: {
+    type: DataTypes.STRING
+  },
+  noKtp: {
+    type: DataTypes.STRING
+  },
   status: {
     type: DataTypes.TINYINT
   }

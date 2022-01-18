@@ -1,10 +1,11 @@
 const express = require('express')
 const Route = express.Router()
-const { registerUser, loginUser, findAll, registerBusinessAccount } = require('../controllers/auth')
+const { registerUser, loginUser, findAll, registerBusinessAccount, loginBusinessAccount } = require('../controllers/auth')
 
 Route
   .get('/', findAll)
   .post('/register-business-account', registerBusinessAccount)
+  .post('/login-business-account', loginBusinessAccount)
   .post('/register-user', registerUser)
   .post('/login-user', loginUser)
 
