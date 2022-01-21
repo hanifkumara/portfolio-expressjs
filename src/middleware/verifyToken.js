@@ -16,7 +16,7 @@ exports.verifyToken = (req, res, next) => {
         return response(res, 401, null, { message: 'Token Expired' })
       }
     }
-    req.myId = decoded.userId
+    req.businessId = decoded.businessId
     req.myEmail = decoded.email
     next()
   })

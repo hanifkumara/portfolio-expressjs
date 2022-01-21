@@ -117,7 +117,7 @@ const loginBusinessAccount = async (req, res, next) => {
       if (!resCheck) return response(res, 401, null, { message: 'Password Wrong!!' })
 
       const payload = {
-        userId: businessAccount.id,
+        businessId: businessAccount.id,
         email: businessAccount.email
       }
 

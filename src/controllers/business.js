@@ -5,10 +5,10 @@ const bcrypt = require("bcryptjs")
 const Create = async (req, res, next) => {
   try {
     const { ownerId, name, type, address, phoneNumber, status } = req.body
-    const {myId} = req
+    // const {myId} = req
 
     const dataBusiness = await Business.create({
-      userId: myId,
+      // userId: myId,
       ownerId,
       name,
       type,

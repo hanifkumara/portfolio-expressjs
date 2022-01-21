@@ -1,7 +1,7 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const db = require('../config/database')
 
-const Product = db.define('Product', {
+const ProductCategory = db.define('ProductCategory', {
   // Model attributes are defined here
   id: {
     type: DataTypes.UUID,
@@ -14,29 +14,17 @@ const Product = db.define('Product', {
   outletId: {
     type: DataTypes.UUID,
   },
-  productCategoryId: {
-    type: DataTypes.UUID,
-  },
   name: {
     type: DataTypes.STRING
   },
-  price: {
-    type: DataTypes.DOUBLE
-  },
-  image: {
-    type: DataTypes.STRING
-  },
-  description: {
-    type: DataTypes.TEXT
-  },
   status: {
-    type: DataTypes.BOOLEAN
+    type: DataTypes.TINYINT
   }
 }, {
   paranoid: true,
   timestamps: true,
-  tableName: 'products',
+  tableName: 'product_categories',
   underscored: false
 });
 
-module.exports = Product
+module.exports = ProductCategory
