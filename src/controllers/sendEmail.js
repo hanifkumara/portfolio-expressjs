@@ -1,16 +1,22 @@
 const { response } = require('../helpers/response')
 const { sendEmail } = require('../config/sendEmail')
 const ejs = require('ejs')
+const jwt = require('jsonwebtoken')
 
 const SendText = async (req, res, next) => {
   try {
-    const { to } = req.body
-    const file = process.cwd() + '/src/templates/template-auth-email.ejs'
-    
+    const { to, businessId } = req.body
+    const file = process.cwd() + '/src/templates/template-verify-email.ejs'
+
+    const token = jwt.sign({businessId}, process.env.SECRET_KEY, { expiresIn: '5h' });
+
+    console.log("token =====>", token)
+
     const dataHtml = await ejs.renderFile(file, {
       thic_image: 'https://www.freeiconspng.com/uploads/success-icon-10.png',
       header: false,
-      footer: false
+      footer: false,
+      url_verify: `${process.env.FRONTEND_URL}/${token}`
     })
 
     const data = {

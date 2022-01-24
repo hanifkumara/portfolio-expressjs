@@ -1,6 +1,6 @@
 const express = require('express')
 const Route = express.Router()
-const { registerUser, loginUser, findAll, registerBusinessAccount, loginBusinessAccount } = require('../controllers/auth')
+const { registerUser, loginUser, findAll, registerBusinessAccount, loginBusinessAccount, verifyEmail } = require('../controllers/auth')
 
 Route
   .get('/', findAll)
@@ -8,6 +8,7 @@ Route
   .post('/login-business-account', loginBusinessAccount)
   .post('/register-user', registerUser)
   .post('/login-user', loginUser)
+  .post('/verify-email', verifyEmail)
 
 const routeProps = {
   Route,
