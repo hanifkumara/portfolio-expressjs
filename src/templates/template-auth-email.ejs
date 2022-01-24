@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body{
+      padding: 0;
+      margin: 0;
+      overflow-x: hidden;
+    }
+    .container-content{
+      position: relative;
+      height: 400px;
+    }
+    .background-content{
+      top: 0;
+      height: 600px;
+      width: 100vw;
+      border: 1px dotted;
+    }
+    .background-content-top{
+      height: 300px;
+      background-color: #6B4EFF;
+    }
+    .background-content-bottom{
+      height: 300px;
+      background-color: #F4F4F4;
+    }
+    .wrapper-content{
+      margin: auto;
+      background-color: white;
+      width: 50%;
+      border-radius: 4px;
+      padding: 20px 34px;
+      /* margin-top: -400px; */
+    }
+    .wrapper-image{
+      text-align: center;
+      width: 14%;
+      padding: 20px 0;
+      margin: auto;
+    } 
+    .wrapper-image > img {
+      width: 100%;
+      height: 100%;
+    }
+    .text-center{
+      text-align: center;
+    }
+    .button{
+      padding: 16px 30px;
+      background-color: #6B4EFF;
+      color: white;
+      border-radius: 2px;
+      width: fit-content;
+      margin: auto;
+    }
+    .text-danger{
+      color: red;
+      font-size: 0.9rem;
+    }
+    @media screen and (max-width: 768px) {
+      .wrapper-content{
+        width: 80%;
+      }
+      .wrapper-image{
+        text-align: center;
+        width: 14%;
+        padding: 20px 0;
+        margin: auto;
+      } 
+    }
+    @media screen and (max-width: 475px) {
+      .wrapper-content{
+        padding: 0;
+        width: 90%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <% if(header){ %>
+    <%- include('./header'); %>
+  <% } %>  
+  <div class="container-content">
+    <!-- <div class="background-content">
+      <div class="background-content-top"></div>
+      <div class="background-content-bottom"></div>
+    </div> -->
+    <div class="wrapper-content">
+      <h1 class="text-center">Welcome!</h1>
+      <p>We're excited to have you get started. First, you need to confirm your account. Just press the button bellow</p>
+      <div class="button">
+        Confirm Account
+      </div>
+      <p class="text-danger text-center">
+        Expired in 6 hour
+      </p>
+    </div>
+  </div>
+  <% if(footer){ %>
+    <%- include('./footer'); %>
+  <% } %>  
+</body>
+</html>

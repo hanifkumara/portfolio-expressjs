@@ -8,9 +8,13 @@ const cors = require('cors')
 const router = require('./src/routes/index')
 const { response } = require('./src/helpers/response')
 
+
+app.set('view engine', 'ejs');
+
 app.use(cors())
 
 // app.use(morgan('dev'))
+app.use(express.static( "public" ));
 
 app.use(express.urlencoded({ extended: false }))
 
