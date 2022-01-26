@@ -160,7 +160,7 @@ const findAll = async (req, res, next) => {
 const verifyEmail = async (req, res, next) => {
   try {
     const { token } = req.body
-    jwt.verify(token, process.env.SECRET_KEY, function (err, decoded) {
+    jwt.verify(token, process.env.SECRET_KEY, async function (err, decoded) {
       if (err) {
         if (err.name === 'JsonWebTokenError') {
           return response(res, 401, null, { message: 'Invalid Token' })
@@ -168,6 +168,13 @@ const verifyEmail = async (req, res, next) => {
           return response(res, 401, null, { message: 'Token Expired' })
         }
       }
+      const dataBusinessAccount = await BusinessAccount.findOne({
+        where: {
+          businessId: decoded.businessId
+        }
+      })
+      dataBusinessAccount.isVerified = true
+      await dataBusinessAccount.save()
       console.log("decoded ======>", decoded)
     })
     return response(res, 200, null, null)
