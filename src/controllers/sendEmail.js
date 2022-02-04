@@ -16,7 +16,7 @@ const SendText = async (req, res, next) => {
       thic_image: 'https://www.freeiconspng.com/uploads/success-icon-10.png',
       header: false,
       footer: false,
-      url_verify: `${process.env.FRONTEND_URL}/${token}`
+      url_verify: `${process.env.FRONTEND_URL}/verify-email/${token}`
     })
 
     const data = {
