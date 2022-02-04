@@ -6,7 +6,8 @@ const password = process.env.DB_PASSWORD
 
 const db = new Sequelize(database, username, password, {
   host: 'localhost',
-  dialect: 'mysql'
+  dialect: 'mysql',
+  dialectModule: require('mysql2')
 })
 
 module.exports = db
