@@ -71,7 +71,7 @@ const loginUser = async (req, res, next) => {
 
 const registerBusinessAccount = async (req, res, next) => {
   try {
-    const {email, password} = req.body
+    const {email, password, phoneNumber} = req.body
 
     const existingBusinessAccount = await BusinessAccount.findOne({
       where: {
@@ -79,13 +79,14 @@ const registerBusinessAccount = async (req, res, next) => {
       }
     })
 
-    if(existingBusinessAccount) return response(res, 401, null, {message: `Email ${email} already in use`})
+    // if(existingBusinessAccount) return response(res, 401, null, {message: `Email ${email} already in use`})
 
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(password, salt);
 
     const resCreateBusinessAccount = await BusinessAccount.create({
       email,
+      phoneNumber,
       password: hash
     })
 
@@ -95,8 +96,9 @@ const registerBusinessAccount = async (req, res, next) => {
 
     resCreateBusinessAccount.businessId = resCreateBusiness.id
     await resCreateBusinessAccount.save()
+    delete resCreateBusinessAccount.dataValues.password1
 
-    return response(res, 201, {result: {email}}, null)
+    return response(res, 201, resCreateBusinessAccount, null)
   } catch (error) {
     return next(error)
   }

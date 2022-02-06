@@ -22,8 +22,8 @@ const SendText = async (req, res, next) => {
     const data = {
       from: process.env.SMTP_EMAIL,  // sender address
       to,   // list of receivers
-      subject: 'Sending Email using Node.js',
-      text: 'That was easy!',
+      subject: 'Verification Account',
+      text: 'please verify your account so you can enter the web app',
       html: dataHtml
     }
     await sendEmail(data)
