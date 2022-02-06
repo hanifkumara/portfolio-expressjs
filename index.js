@@ -21,7 +21,7 @@ app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 
 app.use('/', router)
-app.use('/upload', express.static('./image'))
+app.use('/upload', express.static('./images'))
 
 app.get('/', (req, res) => {
   res.json({

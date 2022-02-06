@@ -52,7 +52,6 @@ const Create = async (req, res, next) => {
       name,
       address,
       phoneNumber,
-      image,
       status
     } = req.body
     const { businessId } = req
@@ -62,13 +61,20 @@ const Create = async (req, res, next) => {
       name,
       address,
       phoneNumber,
-      image,
       status
     }
 
-    const resOutlet = await Outlet.create(dataSend)
+    console.log("req.file =====>", req.file)
 
-    // Business
+    if (req.file) {
+      console.log("file nya ada")
+      // dataSend.image = `${process.env.BASE_URL}/upload/${req.file.filename}`;
+      dataSend.image = req.file.filename;
+    }
+
+    const resOutlet = await Outlet.create(dataSend)
+    // const resOutlet = 'Testing'
+
     return response(res, 201, {result: resOutlet}, null)
   } catch (error) {
     return next(error)

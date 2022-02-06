@@ -20,8 +20,12 @@ const Outlet = db.define('Outlet', {
   phoneNumber: {
     type: DataTypes.STRING
   },
+  image: {
+    type: DataTypes.STRING
+  },
   status: {
-    type: DataTypes.TINYINT
+    type: DataTypes.TINYINT,
+    allowNull: true
   },
 }, {
   paranoid: true,
