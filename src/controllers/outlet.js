@@ -64,6 +64,7 @@ const Create = async (req, res, next) => {
       status
     }
 
+    console.log("req.body =====>", req.body)
     console.log("req.file =====>", req.file)
 
     if (req.file) {
@@ -71,6 +72,8 @@ const Create = async (req, res, next) => {
       // dataSend.image = `${process.env.BASE_URL}/upload/${req.file.filename}`;
       dataSend.image = req.file.filename;
     }
+
+    console.log("dataSend", dataSend)
 
     const resOutlet = await Outlet.create(dataSend)
     // const resOutlet = 'Testing'
