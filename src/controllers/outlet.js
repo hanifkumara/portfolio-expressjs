@@ -90,7 +90,6 @@ const Update = async (req, res, next) => {
       name,
       address,
       phoneNumber,
-      image,
       status
     } = req.body
     const { id } = req.params
@@ -100,19 +99,10 @@ const Update = async (req, res, next) => {
     })
 
     if(!resOutlet) return response(res, 500, null, {message: `Outlet with id ${id} not found`})
-    
-    const dataSend = {
-      name,
-      address,
-      phoneNumber,
-      image,
-      status
-    }
 
     resOutlet.name = name
     resOutlet.address = address
     resOutlet.phoneNumber = phoneNumber
-    resOutlet.image = image
     resOutlet.status = status
 
     await resOutlet.save()

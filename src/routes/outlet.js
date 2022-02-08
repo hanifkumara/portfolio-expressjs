@@ -8,7 +8,7 @@ Route
   .get('/by-business', FindAllByBusiness)
   .get('/:id', FindById)
   .post('/', uploadMulter.single('image'), Create)
-  .put('/:id', Update)
+  .put('/:id', uploadMulter.single('image'), Update)
   .delete('/:id', Delete)
 
 const routeProps = {
