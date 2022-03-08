@@ -1,6 +1,6 @@
 const express = require('express')
 const Route = express.Router()
-const { FindAll, FindAllByOutlet, FindAllByBusiness, FindById, Create, Update, Delete } = require('../controllers/productCategory')
+const { FindAll, FindAllByOutlet, FindAllByBusiness, FindById, Create, Update, Delete, PatchStatus } = require('../controllers/productCategory')
 
 Route
   .get('/', FindAll)
@@ -9,6 +9,7 @@ Route
   .get('/:id', FindById)
   .post('/', Create)
   .put('/:id', Update)
+  .patch('/status/:id', PatchStatus)
   .delete('/:id', Delete)
 
 const routeProps = {

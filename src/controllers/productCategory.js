@@ -73,7 +73,6 @@ const Create = async (req, res, next) => {
       status
     } = req.body
 
-    console.log("req =====>", req)
 
     const { businessId } = req
 
@@ -83,8 +82,6 @@ const Create = async (req, res, next) => {
       name,
       status
     }
-
-    console.log("dataSend =====>", dataSend)
 
     // const resProductCategory = 'Bismillah, testing'
     const resProductCategory = await ProductCategory.create(dataSend)
@@ -98,9 +95,7 @@ const Update = async (req, res, next) => {
   try {
   
     const { 
-      outletId,
-      name,
-      status
+      name
     } = req.body
 
     const { id } = req.params
@@ -110,8 +105,26 @@ const Update = async (req, res, next) => {
     })
     if(!resProductCategory) return response(res, 500, null, {message: `ProductCategory with id ${id} not found`})
 
-    resProductCategory.outletId = outletId
     resProductCategory.name = name
+
+    await resProductCategory.save()
+
+    return response(res, 200, {result: resProductCategory}, null)
+  } catch (error) {
+    return next(error)
+  }
+}
+
+const PatchStatus = async (req, res, next) => {
+  try {
+    const { id } = req.params
+    const { status } = req.body
+
+    const resProductCategory = await ProductCategory.findOne({
+      where: { id }
+    })
+    if(!resProductCategory) return response(res, 500, null, {message: `ProductCategory with id ${id} not found`})
+
     resProductCategory.status = status
 
     await resProductCategory.save()
@@ -148,5 +161,6 @@ module.exports = {
   FindById,
   Create,
   Update,
+  PatchStatus,
   Delete
 }

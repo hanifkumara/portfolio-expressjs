@@ -11,9 +11,6 @@ const ProductCategory = db.define('ProductCategory', {
   businessId: {
     type: DataTypes.UUID,
   },
-  outletId: {
-    type: DataTypes.UUID,
-  },
   name: {
     type: DataTypes.STRING
   },
