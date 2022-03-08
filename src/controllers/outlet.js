@@ -2,6 +2,7 @@ const { response } = require('../helpers/response')
 const User = require("../models/User.js")
 const Business = require("../models/Business.js")
 const Outlet = require("../models/Outlet.js")
+const fs = require('fs')
 
 const FindAll = async (req, res, next) => {
   try {
@@ -64,16 +65,9 @@ const Create = async (req, res, next) => {
       status
     }
 
-    console.log("req.body =====>", req.body)
-    console.log("req.file =====>", req.file)
-
     if (req.file) {
-      console.log("file nya ada")
-      // dataSend.image = `${process.env.BASE_URL}/upload/${req.file.filename}`;
       dataSend.image = req.file.filename;
     }
-
-    console.log("dataSend", dataSend)
 
     const resOutlet = await Outlet.create(dataSend)
     // const resOutlet = 'Testing'
@@ -99,6 +93,15 @@ const Update = async (req, res, next) => {
     })
 
     if(!resOutlet) return response(res, 500, null, {message: `Outlet with id ${id} not found`})
+
+
+    if (req.file && resOutlet.image) {
+      fs.unlinkSync('images/' + resOutlet.image);
+    }
+    
+    if (req.file) {
+      resOutlet.image = req.file.filename;
+    }
 
     resOutlet.name = name
     resOutlet.address = address
