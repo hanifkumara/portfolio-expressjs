@@ -8,6 +8,7 @@ const cors = require('cors')
 const router = require('./src/routes/index')
 const { response } = require('./src/helpers/response')
 
+const path = require('path');
 
 app.set('view engine', 'ejs');
 
@@ -21,7 +22,9 @@ app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 
 app.use('/', router)
-app.use('/upload', express.static('./images'))
+// app.use('/upload', express.static('./images'))
+
+app.use(express.static(path.join(__dirname, './images')));
 
 app.get('/', (req, res) => {
   res.json({
