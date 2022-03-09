@@ -1,5 +1,6 @@
 const  { response } = require('../helpers/response')
 const Product = require('../models/Product')
+const Outlet = require('../models/Outlet')
 
 const FindAll = async (req, res, next) => {
   try {
@@ -21,7 +22,8 @@ const FindAllByBusiness = async (req, res, next) => {
     console.log("businessId =====>", businessId)
 
     const resProduct = await Product.findAll({
-      where: {businessId}
+      where: {businessId},
+      include: [{ model: Outlet}]
     })
     if(!resProduct) return response(res, 500, null, {message: "Product not Found"})
     
@@ -51,13 +53,11 @@ const FindById = async (req, res, next) => {
 
 const Create = async (req, res, next) => {
   try {
-  
     const { 
       outletId,
       name,
       productCategoryId,
       price,
-      image,
       description,
       status
     } = req.body
@@ -66,22 +66,26 @@ const Create = async (req, res, next) => {
 
     const { businessId } = req
 
-    const dataSend = {
-      businessId,
-      outletId,
-      name,
-      productCategoryId,
-      price,
-      image,
-      description,
-      status
+    const outletIds = outletId ? JSON.parse(outletId) : null
+
+    for(const outletId of outletIds) {
+      const dataSend = {
+        businessId,
+        outletId,
+        name,
+        productCategoryId,
+        price,
+        description,
+        status
+      }
+      if (req.file) {
+        dataSend.image = req.file.filename;
+      }
+      console.log('dataSend =====>', dataSend)
+      await Product.create(dataSend)
     }
 
-    console.log("dataSend =====>", dataSend)
-
-    // const resProduct = 'Bismillah, testing'
-    const resProduct = await Product.create(dataSend)
-    return response(res, 200, {result: resProduct}, null)
+    return response(res, 200, null, null)
   } catch (error) {
     return next(error)
   }
