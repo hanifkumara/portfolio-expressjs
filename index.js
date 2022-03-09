@@ -24,7 +24,7 @@ app.use(express.json())
 app.use('/', router)
 // app.use('/upload', express.static('./images'))
 
-app.use(express.static(path.join(__dirname, './images')));
+app.use('/upload', express.static(path.join(__dirname, './images')));
 
 app.get('/', (req, res) => {
   res.json({
