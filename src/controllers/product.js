@@ -1,6 +1,7 @@
 const  { response } = require('../helpers/response')
 const Product = require('../models/Product')
 const Outlet = require('../models/Outlet')
+const fs = require('fs')
 
 const FindAll = async (req, res, next) => {
   try {
@@ -111,11 +112,19 @@ const Update = async (req, res, next) => {
     })
     if(!resProduct) return response(res, 500, null, {message: `Product with id ${id} not found`})
 
+    if (req.file && resProduct.image) {
+      fs.unlinkSync('images/' + resProduct.image);
+    }
+    
+    if (req.file) {
+      console.log('req.file =====>', req.file)
+      resProduct.image = req.file.filename;
+    }
+
     resProduct.outletId = outletId
     resProduct.name = name
     resProduct.productCategoryId = productCategoryId
     resProduct.price = price
-    resProduct.image = image
     resProduct.description = description
     resProduct.status = status
 

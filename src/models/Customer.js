@@ -1,40 +1,27 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const db = require('../config/database')
-const Business = require('./Business')
 
-const Outlet = db.define('Outlet', {
+const Customer = db.define('Customer', {
   // Model attributes are defined here
   id: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
     primaryKey: true
   },
-  businessId: {
-    type: DataTypes.UUID,
-  },
-  name: {
+  username: {
     type: DataTypes.STRING
-  },
-  address: {
-    type: DataTypes.TEXT
   },
   phoneNumber: {
     type: DataTypes.STRING
   },
-  image: {
+  password: {
     type: DataTypes.STRING
-  },
-  status: {
-    type: DataTypes.TINYINT,
-    allowNull: true
-  },
+  }
 }, {
   paranoid: true,
   timestamps: true,
-  tableName: 'outlets',
+  tableName: 'customers',
   underscored: false
 });
 
-Business.hasMany(Outlet, { foreignKey: 'businessId' });
-
-module.exports = Outlet
+module.exports = Customer
