@@ -17,12 +17,11 @@ const FindAll = async (req, res, next) => {
 const FindAllByOutlet = async (req, res, next) => {
   try {
     const { businessId } = req
-    const { outletId } = req.body
   
     const resProductCategory = await ProductCategory.findAll({
-      where: {outletId, businessId}
+      where: {businessId}
     })
-    if(!resProductCategory) return response(res, 500, null, {message: `ProductCategory with outletId ${outletId} not Found`})
+    if(!resProductCategory) return response(res, 500, null, {message: `ProductCategory not Found`})
     
     return response(res, 200, {result: resProductCategory}, null)
 
@@ -38,7 +37,7 @@ const FindAllByBusiness = async (req, res, next) => {
     const resProductCategory = await ProductCategory.findAll({
       where: {businessId}
     })
-    if(!resProductCategory) return response(res, 500, null, {message: `ProductCategory with outletId ${businessId} not Found`})
+    if(!resProductCategory) return response(res, 500, null, {message: `ProductCategory with businessId ${businessId} not Found`})
     
     return response(res, 200, {result: resProductCategory}, null)
 
@@ -68,7 +67,6 @@ const Create = async (req, res, next) => {
   try {
   
     const { 
-      outletId,
       name,
       status
     } = req.body
@@ -78,7 +76,6 @@ const Create = async (req, res, next) => {
 
     const dataSend = {
       businessId,
-      outletId,
       name,
       status
     }

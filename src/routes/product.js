@@ -1,6 +1,6 @@
 const express = require('express')
 const Route = express.Router()
-const { FindAll, FindAllByBusiness, FindById, Create, Update, Delete } = require('../controllers/product')
+const { FindAll, FindAllByBusiness, FindById, Create, Update, PatchStatus, Delete } = require('../controllers/product')
 const { uploadMulter } = require('../middleware/upload')
 
 Route
@@ -9,6 +9,7 @@ Route
   .get('/:id', FindById)
   .post('/', uploadMulter.single('image'), Create)
   .put('/:id', Update)
+  .patch('/status/:id', PatchStatus)
   .delete('/:id', Delete)
 
 const routeProps = {

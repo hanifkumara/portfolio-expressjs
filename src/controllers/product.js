@@ -126,6 +126,28 @@ const Update = async (req, res, next) => {
     return next(error)
   }
 }
+const PatchStatus = async (req, res, next) => {
+  try {
+  
+    const {id} = req.params
+    const {
+      status
+    } = req.body
+
+    const resProduct = await Product.findOne({
+      where: { id }
+    })
+    if(!resProduct) return response(res, 500, null, {message: `Product with id ${id} not found`})
+    
+    resProduct.status = status
+    await resProduct.save()
+
+    return response(res, 200, {result: resProduct}, null)
+
+  } catch (error) {
+    return next(error)
+  }
+}
 
 const Delete = async (req, res, next) => {
   try {
@@ -152,5 +174,6 @@ module.exports = {
   FindById,
   Create,
   Update,
+  PatchStatus,
   Delete
 }

@@ -78,6 +78,29 @@ const Create = async (req, res, next) => {
   }
 }
 
+const PatchStatus = async (req, res, next) => {
+  try {
+  
+    const {id} = req.params
+    const {
+      status
+    } = req.body
+
+    const resOutlet = await Outlet.findOne({
+      where: { id }
+    })
+    if(!resOutlet) return response(res, 500, null, {message: `Outlet with id ${id} not found`})
+    
+    resOutlet.status = status
+    await resOutlet.save()
+
+    return response(res, 200, {result: resOutlet}, null)
+
+  } catch (error) {
+    return next(error)
+  }
+}
+
 const Update = async (req, res, next) => {
   try {
     const {
@@ -140,5 +163,6 @@ module.exports = {
   FindById,
   Create,
   Update,
+  PatchStatus,
   Delete
 }
