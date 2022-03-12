@@ -4,6 +4,7 @@ const IncomingStockProduct = require('../models/IncomingStockProduct')
 const Product = require('../models/Product')
 const Stock = require('../models/Stock')
 const randomstring = require('randomstring')
+const Outlet = require('../models/Outlet')
 
 const FindAllByBusiness = async (req, res, next) => {
   try {
@@ -11,7 +12,12 @@ const FindAllByBusiness = async (req, res, next) => {
     const resIncomingStock = await IncomingStock.findAll({
       where: {
         businessId
-      }
+      },
+      include: [
+        {
+          model: Outlet
+        }
+      ]
     })
 
     if(!resIncomingStock) return response(res, 500, null, {message: `Incoming Stock with business id ${businessId} not found`})
@@ -46,7 +52,7 @@ const Create = async (req, res, next) => {
     resStock.code = code;
     await resStock.save();
 
-    const parseProducts = products
+    const parseProducts = products ? JSON.parse(products) : null
     if(parseProducts) {
       for (const product of parseProducts) {
 

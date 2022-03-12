@@ -3,6 +3,10 @@ const User = require("../models/User.js")
 const Business = require("../models/Business.js")
 const Outlet = require("../models/Outlet.js")
 const fs = require('fs')
+const Product = require('../models/Product')
+const Stock = require('../models/Stock')
+const IncomingStock = require('../models/IncomingStock')
+const OutcomingStock = require('../models/OutcomingStock')
 
 const FindAll = async (req, res, next) => {
   try {
@@ -150,6 +154,26 @@ const Delete = async (req, res, next) => {
     if(!resOutlet) return response(res, 500, null, {message: `Outlet with id ${id} not found`})
 
     await resOutlet.destroy()
+    await Product.destroy({
+      where: {
+        outletId: id
+      }
+    })
+    await Stock.destroy({
+      where: {
+        outletId: id
+      }
+    })
+    await IncomingStock.destroy({
+      where: {
+        outletId: id
+      }
+    })
+    await OutcomingStock.destroy({
+      where: {
+        outletId: id
+      }
+    })
 
     return response(res, 201, {result: resOutlet}, null)
   } catch (error) {

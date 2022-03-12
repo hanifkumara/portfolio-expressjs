@@ -1,6 +1,7 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const db = require('../config/database')
-const Business = require('./Business')
+const Business = require('./Business');
+const IncomingStock = require('./IncomingStock');
 
 const Outlet = db.define('Outlet', {
   // Model attributes are defined here
@@ -35,6 +36,6 @@ const Outlet = db.define('Outlet', {
   underscored: false
 });
 
-Business.hasMany(Outlet, { foreignKey: 'businessId' });
+Business.hasMany(Outlet, { foreignKey: 'businessId' })
 
 module.exports = Outlet

@@ -47,7 +47,7 @@ const Create = async (req, res, next) => {
     await resStock.save();
 
 
-    const parseStock = stocks
+    const parseStock = stocks ? JSON.parse(stocks) : null
     if(parseStock) {
       for (const stock of parseStock) {
 

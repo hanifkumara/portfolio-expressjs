@@ -26,6 +26,9 @@ const Stock = db.define('Stock', {
   stock: {
     type: DataTypes.INTEGER
   },
+  isInitial: {
+    type: DataTypes.BOOLEAN
+  },
   expiredDate: {
     type: DataTypes.DATE
   },
