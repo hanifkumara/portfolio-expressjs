@@ -1,5 +1,6 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const db = require('../config/database')
+const BusinessAccount = require('./BusinessAccount')
 
 const Business = db.define('Business', {
   // Model attributes are defined here
@@ -53,5 +54,7 @@ const Business = db.define('Business', {
   tableName: 'businesses',
   underscored: false
 });
+
+Business.belongsTo(BusinessAccount, { foreignKey: 'businessAccountId' });
 
 module.exports = Business

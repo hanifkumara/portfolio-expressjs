@@ -98,7 +98,7 @@ const registerBusinessAccount = async (req, res, next) => {
 
     resCreateBusinessAccount.businessId = resCreateBusiness.id
     await resCreateBusinessAccount.save()
-    delete resCreateBusinessAccount.dataValues.password1
+    delete resCreateBusinessAccount.dataValues.password
 
     return response(res, 201, resCreateBusinessAccount, null)
   } catch (error) {

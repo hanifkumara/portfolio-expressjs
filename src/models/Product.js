@@ -24,11 +24,20 @@ const Product = db.define('Product', {
   price: {
     type: DataTypes.DOUBLE
   },
+  stock: {
+    type: DataTypes.INTEGER
+  },
+  stockStarting: {
+    type: DataTypes.INTEGER
+  },
   image: {
     type: DataTypes.STRING
   },
   description: {
     type: DataTypes.TEXT
+  },
+  expiredDate: {
+    type: DataTypes.DATE
   },
   status: {
     type: DataTypes.BOOLEAN

@@ -1,7 +1,11 @@
 const  { response } = require('../helpers/response')
 const Product = require('../models/Product')
 const Outlet = require('../models/Outlet')
+const Stock = require('../models/Stock')
+const IncomingStock = require('../models/IncomingStock')
+const IncomingStockProduct = require('../models/IncomingStockProduct')
 const fs = require('fs')
+
 
 const FindAll = async (req, res, next) => {
   try {
@@ -24,7 +28,19 @@ const FindAllByBusiness = async (req, res, next) => {
 
     const resProduct = await Product.findAll({
       where: {businessId},
-      include: [{ model: Outlet}]
+      include: [
+        { model: Outlet},
+        { 
+          model: Stock,
+          include: 
+            {
+              model: IncomingStock,
+              include: {
+                model: IncomingStockProduct
+            }
+          }
+        }
+      ]
     })
     if(!resProduct) return response(res, 500, null, {message: "Product not Found"})
     
@@ -60,30 +76,42 @@ const Create = async (req, res, next) => {
       productCategoryId,
       price,
       description,
-      status
+      stock,
+      status,
+      expiredDate
     } = req.body
 
     console.log("req =====>", req)
 
     const { businessId } = req
 
-    const outletIds = outletId ? JSON.parse(outletId) : null
+    const outletIds = outletId 
 
     for(const outletId of outletIds) {
-      const dataSend = {
+      const dataSendProduct = {
         businessId,
         outletId,
         name,
         productCategoryId,
         price,
         description,
+        stock,
+        stockStarting: stock,
         status
       }
+      if(expiredDate) dataSendProduct.expiredDate = expiredDate
       if (req.file) {
-        dataSend.image = req.file.filename;
+        dataSendProduct.image = req.file.filename;
       }
-      console.log('dataSend =====>', dataSend)
-      await Product.create(dataSend)
+      const resProduct = await Product.create(dataSendProduct)
+      
+      const dataSendStock = {
+        businessId,
+        outletId,
+        productId: resProduct.id,
+        stock
+      }
+      await Stock.create(dataSendStock)
     }
 
     return response(res, 200, null, null)
@@ -100,9 +128,9 @@ const Update = async (req, res, next) => {
       name,
       productCategoryId,
       price,
-      image,
       description,
-      status
+      status,
+      expiredDate
     } = req.body
 
     const { id } = req.params
@@ -127,6 +155,8 @@ const Update = async (req, res, next) => {
     resProduct.price = price
     resProduct.description = description
     resProduct.status = status
+
+    if(expiredDate) resProduct.expiredDate = expiredDate
 
     await resProduct.save()
 
