@@ -1,5 +1,6 @@
 const { Sequelize, DataTypes } = require('sequelize');
-const db = require('../config/database')
+const db = require('../config/database');
+const Outlet = require('./Outlet');
 
 const OutcomingStock = db.define('OutcomingStock', {
   // Model attributes are defined here
@@ -29,5 +30,7 @@ const OutcomingStock = db.define('OutcomingStock', {
   tableName: 'outcoming_stocks',
   underscored: false
 });
+
+OutcomingStock.belongsTo(Outlet, {foreignKey: 'outletId'})
 
 module.exports = OutcomingStock

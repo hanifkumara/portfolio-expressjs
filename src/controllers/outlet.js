@@ -7,6 +7,7 @@ const Product = require('../models/Product')
 const Stock = require('../models/Stock')
 const IncomingStock = require('../models/IncomingStock')
 const OutcomingStock = require('../models/OutcomingStock')
+const { Sequelize } = require('sequelize')
 
 const FindAll = async (req, res, next) => {
   try {
@@ -23,14 +24,20 @@ const FindAll = async (req, res, next) => {
 const FindAllByBusiness = async (req, res, next) => {
   try {
 
+    const { name } = req.query
     const { businessId } = req
+
+    const where = {}
+    name ? (where.name = { [Sequelize.Op.like]: `%${name}%` }) : '';
+    businessId ? (where.businessId = { [Sequelize.Op.like]: `%${businessId}%` }) : '';
+
     const resOutlet = await Outlet.findAll({
-      where: {businessId}
+      where
     })
 
     if(!resOutlet) return response(res, 500, null, {message: "Outlet not Found"})
 
-    return response(res, 201, {result: resOutlet}, null)
+    return response(res, 200, {result: resOutlet}, null)
   } catch (error) {
     return next(error)
   }

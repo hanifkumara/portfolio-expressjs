@@ -76,6 +76,14 @@ const Register = async (req, res, next) => {
       password
     } = req.body
 
+    const existingUsername = await Customer.findOne({
+      where: {
+        username
+      }
+    })
+    
+    if(existingUsername) return response(res, 500, null, {message: `Customer with username ${username} already registered`})
+
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(password, salt);
 

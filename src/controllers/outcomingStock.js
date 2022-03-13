@@ -4,14 +4,34 @@ const OutcomingStockProduct = require('../models/OutcomingStockProduct')
 const Product = require('../models/Product')
 const Stock = require('../models/Stock')
 const randomstring = require("randomstring");
+const Outlet = require('../models/Outlet')
+const { Sequelize } = require('sequelize')
 
 const FindAllByBusiness = async (req, res, next) => {
   try {
     const { businessId } = req
+    const { code } = req.query
+  
+    const where = {}
+    code ? (where.code = { [Sequelize.Op.like]: `%${code}%` }) : '';
+    businessId ? (where.businessId = { [Sequelize.Op.like]: `%${businessId}%` }) : '';
+
     const resOutcomingStock = await OutcomingStock.findAll({
-      where: {
-        businessId
-      }
+      where,
+      include: [
+        {
+          model: Outlet
+        },
+        {
+          model: OutcomingStockProduct,
+          include: {
+            model: Stock,
+            include: {
+              model: Product
+            }
+          }
+        }
+      ]
     })
 
     if(!resOutcomingStock) return response(res, 500, null, {message: `Outcoming Stock with business id ${businessId} not found`})

@@ -1,6 +1,7 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const db = require('../config/database')
-const IncomingStock = require('./IncomingStock')
+const IncomingStock = require('./IncomingStock');
+const Product = require('./Product');
 
 const IncomingStockProduct = db.define('IncomingStockProduct', {
   // Model attributes are defined here
@@ -29,6 +30,6 @@ const IncomingStockProduct = db.define('IncomingStockProduct', {
 });
 
 IncomingStock.hasMany(IncomingStockProduct, {foreignKey: 'incomingStockId'})
-
+IncomingStockProduct.belongsTo(Product, {foreignKey: 'productId'})
 
 module.exports = IncomingStockProduct

@@ -31,4 +31,6 @@ const IncomingStock = db.define('IncomingStock', {
   underscored: false
 });
 
+IncomingStock.belongsTo(Outlet, { foreignKey: 'outletId' });
+
 module.exports = IncomingStock

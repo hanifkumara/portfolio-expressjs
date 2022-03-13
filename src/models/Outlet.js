@@ -1,7 +1,6 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const db = require('../config/database')
 const Business = require('./Business');
-const IncomingStock = require('./IncomingStock');
 
 const Outlet = db.define('Outlet', {
   // Model attributes are defined here

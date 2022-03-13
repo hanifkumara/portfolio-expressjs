@@ -5,6 +5,8 @@ const Stock = require('../models/Stock')
 const IncomingStock = require('../models/IncomingStock')
 const IncomingStockProduct = require('../models/IncomingStockProduct')
 const fs = require('fs')
+const OutcomingStockProduct = require('../models/OutcomingStockProduct')
+const { Sequelize } = require('sequelize')
 
 
 const FindAll = async (req, res, next) => {
@@ -23,11 +25,14 @@ const FindAll = async (req, res, next) => {
 const FindAllByBusiness = async (req, res, next) => {
   try {
     const { businessId } = req
+    const { name } = req.query
   
-    console.log("businessId =====>", businessId)
-
+    const where = {}
+    name ? (where.name = { [Sequelize.Op.like]: `%${name}%` }) : '';
+    businessId ? (where.businessId = { [Sequelize.Op.like]: `%${businessId}%` }) : '';
+    
     const resProduct = await Product.findAll({
-      where: {businessId},
+      where,
       include: [
         { model: Outlet}
       ]
@@ -44,22 +49,31 @@ const FindAllByBusiness = async (req, res, next) => {
 const InventoryByBusiness = async (req, res, next) => {
   try {
     const { businessId } = req
+
+    const { name } = req.query
   
-    console.log("businessId =====>", businessId)
+    const where = {}
+    name ? (where.name = { [Sequelize.Op.like]: `%${name}%` }) : '';
+    businessId ? (where.businessId = { [Sequelize.Op.like]: `%${businessId}%` }) : '';
 
     const resProduct = await Product.findAll({
-      where: {businessId},
+      where,
+      order: [[Stock, 'createdAt', 'DESC']],
       include: [
-        { model: Outlet},
+        { model: Outlet },
         { 
           model: Stock,
-          include: 
+          include:[
             {
               model: IncomingStock,
               include: {
                 model: IncomingStockProduct
+              }
+            },
+            {
+              model: OutcomingStockProduct
             }
-          }
+          ]
         }
       ]
     })
