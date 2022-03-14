@@ -1,5 +1,4 @@
-# Telegram App Api
-
+# Inventory Management & Online Store API
 This API is for Telegram App where private chat or group chat in realtime
 
 ## Built With
