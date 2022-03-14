@@ -1,5 +1,5 @@
 # Inventory Management & Online Store API
-This API is for Telegram App where private chat or group chat in realtime
+This API is for Inventory Management & Online Store App where private chat or group chat in realtime
 
 ## Built With
 * [Node.js](https://nodejs.org/en/)
@@ -71,7 +71,7 @@ My Email : hanifkumara00@gmail.com
 
 LinkedIn : [https://www.linkedin.com/in/hanifkumara](https://www.linkedin.com/in/hanifkumara/)
 
-Project Link: [https://github.com/hanifkumara/telegram-app-api](https://github.com/hanifkumara/portfolio-expressjs)
+Project Link: [https://github.com/hanifkumara/portfolio-expressjs](https://github.com/hanifkumara/portfolio-expressjs)
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
