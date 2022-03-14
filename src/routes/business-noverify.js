@@ -1,9 +1,10 @@
 const express = require('express')
 const Route = express.Router()
-const { Create, AllOutlets } = require('../controllers/business')
+const { FindById, Create, AllOutlets } = require('../controllers/business');
 
 Route
   .get('/all-outlets', AllOutlets)
+  .get('/:id', FindById)
 
 const routeProps = {
   Route,

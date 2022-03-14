@@ -16,6 +16,12 @@ const Transaction = db.define('Transaction', {
   outletId: {
     type: DataTypes.UUID,
   },
+  customerId: {
+    type: DataTypes.UUID,
+  },
+  totalPayment: {
+    type: DataTypes.DOUBLE,
+  },
   productId: {
     type: DataTypes.UUID,
   },

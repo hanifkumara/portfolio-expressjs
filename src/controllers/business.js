@@ -4,6 +4,21 @@ const bcrypt = require("bcryptjs")
 const Outlet = require('../models/Outlet')
 const BusinessAccount = require('../models/BusinessAccount')
 
+const FindById = async (req, res, next) => {
+  try {
+    const { id } = req.params
+    const resBusiness = await Business.findOne({
+      where: {id}
+    })
+
+    if(!resBusiness) return response(res, 500, null, {message: `Business with id ${id} not found`})
+
+    return response(res, 201, resBusiness, null)
+  } catch (error) {
+    return next(error)
+  }
+}
+
 const MyBusiness = async (req, res, next) => {
   try {
     const { businessId } = req
@@ -72,7 +87,7 @@ const AllOutlets = async (req, res, next) => {
                 businessName: value.name, 
                 outletId: value2.id, 
                 outletName: value2.name, 
-                phoneNumber: value2.phone_number, 
+                phoneNumber: value2.phoneNumber, 
                 address: value2.address, 
                 image: value.image, 
                 imageOutlet: value2.image
@@ -86,6 +101,8 @@ const AllOutlets = async (req, res, next) => {
         })
       }
     })
+
+    console.log('resBusinessOutlet =====>', resBusinessOutlet)
 
     return response(res, 201, {data: resBusinessOutlet}, null)
   } catch (error) {
@@ -167,6 +184,7 @@ const UpdateBusinessAccount = async (req, res, next) => {
 }
 
 module.exports = {
+  FindById,
   UpdateBusiness,
   UpdateBusinessAccount,
   MyBusiness,

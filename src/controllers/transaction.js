@@ -7,6 +7,7 @@ const OutcomingStockProduct = require('../models/OutcomingStockProduct')
 const Transaction = require('../models/transaction')
 const dayjs = require('dayjs')
 const Product = require('../models/Product')
+const TransactionItem = require('../models/transactionItem')
 
 
 const FindAll = async (req, res, next) => {
@@ -63,6 +64,7 @@ const Create = async (req, res, next) => {
       businessId,
       outletId,
       customerId,
+      totalPayment,
       items
     } = req.body
 
@@ -72,14 +74,24 @@ const Create = async (req, res, next) => {
       businessId,
       outletId,
       customerId,
-      receiptNumber: `${customerId}:${dayjs(date).format('DD/MM/YY:hh:mm:ss')}`,
+      totalPayment,
+      receiptNumber: `Receipt_${dayjs(date).format('DD/MM/YY:hh:mm:ss')}`,
       status: 'onprogress'
     }
 
     const resTransaction = await Transaction.create(dataSendTransaction)
-    const parseItems = items
+    const parseItems = items ? JSON.parse(items) : null
     if(parseItems) {
       for (const item of parseItems) {
+        const dataSendItem = {
+          transactionId: resTransaction.id,
+          productId: item.productId,
+          quantity: item.quantity,
+          priceProduct: item.priceProduct
+        }
+
+        await TransactionItem.create(dataSendItem)
+
         item.tempQuantity = item.quantity
         const currProduct = await Product.findOne({
           where: {
@@ -96,7 +108,7 @@ const Create = async (req, res, next) => {
             productId: item.productId
           }
         })
-        if (currStock.length > 1) {
+        if (currStock.length > 0) {
           const sortStock = currStock.sort(
             (a, b) => new Date(a.expiredDate) - new Date(b.expiredDate)
           );

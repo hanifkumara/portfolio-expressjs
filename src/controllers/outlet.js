@@ -52,7 +52,7 @@ const FindById = async (req, res, next) => {
 
     if(!resOutlet) return response(res, 500, null, {message: `Outlet with id ${id} not found`})
 
-    return response(res, 201, {result: resOutlet}, null)
+    return response(res, 201, resOutlet, null)
   } catch (error) {
     return next(error)
   }

@@ -86,13 +86,14 @@ const registerBusinessAccount = async (req, res, next) => {
 
     const resCreateBusinessAccount = await BusinessAccount.create({
       email,
-      phoneNumber,
-      password: hash
+      password: hash,
+      isVerified: 1
     })
 
     const resCreateBusiness = await Business.create({
       id: resCreateBusinessAccount.id,
       name,
+      phoneNumber,
       businessAccountId: resCreateBusinessAccount.id
     })
 

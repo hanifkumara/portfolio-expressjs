@@ -7,7 +7,7 @@ const IncomingStockProduct = require('../models/IncomingStockProduct')
 const fs = require('fs')
 const OutcomingStockProduct = require('../models/OutcomingStockProduct')
 const { Sequelize } = require('sequelize')
-
+const ProductCategory = require('../models/ProductCategory')
 
 const FindAll = async (req, res, next) => {
   try {
@@ -21,6 +21,53 @@ const FindAll = async (req, res, next) => {
     return next(error)
   }
 }
+
+const FindAllOnlineStore = async (req, res, next) => {
+  try {
+    const {businessId, outletId} = req.query
+
+    const where = {}
+    businessId ? (where.businessId = { [Sequelize.Op.like]: `%${businessId}%` }) : '';
+    outletId ? (where.outletId = { [Sequelize.Op.like]: `%${outletId}%` }) : '';
+    where.status = { [Sequelize.Op.eq]: 1 }
+
+    const resProduct = await Product.findAll({
+      where,
+      include: [
+        {
+          model: ProductCategory
+        }
+      ]
+    })
+    if(!resProduct) return response(res, 500, null, {message: "Product not Found"})
+    
+    return response(res, 200, {result: resProduct}, null)
+
+  } catch (error) {
+    return next(error)
+  }
+}
+
+const FindProductId = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    const resProduct = await Product.findOne({
+      where: { id },
+      include: [
+        {
+          model: ProductCategory
+        }
+      ]
+    });
+
+    if(!resProduct) return response(res, 500, null, {message: "Product not Found"})
+
+    return response(res, 200, resProduct, null)
+  } catch (err) {
+    return next(err);
+  }
+};
 
 const FindAllByBusiness = async (req, res, next) => {
   try {
@@ -271,6 +318,8 @@ const Delete = async (req, res, next) => {
 module.exports = {
   FindAll,
   FindAllByBusiness,
+  FindAllOnlineStore,
+  FindProductId,
   FindById,
   InventoryByBusiness,
   Create,
