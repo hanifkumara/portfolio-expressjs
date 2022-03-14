@@ -63,7 +63,8 @@ Please make sure to update tests as appropriate.
 
 ## Project Related
 
-[https://github.com/hanifkumara/](https://github.com/hanifkumara/portfolio-reactjs)
+[https://github.com/hanifkumara/portfolio-reactjs](https://github.com/hanifkumara/portfolio-reactjs)
+[https://github.com/hanifkumara/onlinse-store](https://github.com/hanifkumara/onlinse-store)
 
 ## Contact
 
