@@ -1,11 +1,5 @@
 # Telegram App Api
 
-<p align="center">
-  <p align="center">
-    <image align="center" width="200" src='./screenshots/logo.PNG' />
-  </p>
-</p>
-
 This API is for Telegram App where private chat or group chat in realtime
 
 ## Built With
@@ -32,18 +26,20 @@ Create .env file in your root project folder.
 
 ```env
 
-DB_HOST= localhost
-DB_USER= root
-DB_PASS= 
-DB_NAME= db_telegram_app
-PORT= 5000
-BASE_URL= http://localhost:5000
-BASE_URL_FRONTEND= http://localhost:8080
+BASE_URL=http://localhost:5000
 
-EMAIL_USERNAME= email@gmail.com
-EMAIL-PASSWORD= email123#
+DB_HOST=localhost
+DB_NAME=database-example
+DB_USERNAME=root
+DB_PASSWORD=
 
-SECRET_KEY= jsdkfjkldsf@sdflkal$kfldfgp
+SECRET_KEY= 
+
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USERNAME=
+SMTP_PASSWORD=
+SMTP_EMAIL=
 
 ```
 
@@ -52,7 +48,7 @@ SECRET_KEY= jsdkfjkldsf@sdflkal$kfldfgp
 Development mode
 
 ```bash
-yarn run dev
+yarn dev
 ```
 
 Deploy mode
@@ -61,12 +57,6 @@ Deploy mode
 yarn start
 ```
 
-## REST API
-
-You can view my Postman collection [here](https://documenter.getpostman.com/view/14394222/TW6xp8vK) </br>
-or </br>
-[![run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/7218a4a5671aba0166c9)
-
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
@@ -74,7 +64,7 @@ Please make sure to update tests as appropriate.
 
 ## Project Related
 
-[https://github.com/hanifkumara/telegram-app](https://github.com/hanifkumara/telegram-app)
+[https://github.com/hanifkumara/](https://github.com/hanifkumara/portfolio-reactjs)
 
 ## Contact
 
@@ -82,7 +72,7 @@ My Email : hanifkumara00@gmail.com
 
 LinkedIn : [https://www.linkedin.com/in/hanifkumara](https://www.linkedin.com/in/hanifkumara/)
 
-Project Link: [https://github.com/hanifkumara/telegram-app-api](https://github.com/hanifkumara/telegram-app-api)
+Project Link: [https://github.com/hanifkumara/telegram-app-api](https://github.com/hanifkumara/portfolio-expressjs)
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
