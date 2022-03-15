@@ -22,9 +22,6 @@ const Transaction = db.define('Transaction', {
   totalPayment: {
     type: DataTypes.DOUBLE,
   },
-  productId: {
-    type: DataTypes.UUID,
-  },
   receiptNumber: {
     type: DataTypes.STRING,
   },
